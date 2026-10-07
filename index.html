@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>星織學園 | Hoshiori Gakuen</title>
+    <style>
+        /* ==========================================
+           1. 全局樣式與變數設定
+           ================================---------- */
+        :root {
+            /* 主題顏色設定（可在此處修改網站配色） */
+            --bg-deep: #090b16;         /* 網頁最深背景色（夜空色） */
+            --bg-card: rgba(20, 24, 45, 0.75); /* 區塊背景（半透明深藍） */
+            --primary-glow: #7b9fe7;    /* 主要星光藍色 */
+            --accent-glow: #d4af37;     /* 點綴金光/星芒色 */
+            --text-main: #f0f4f8;       /* 主文字顏色 */
+            --text-muted: #94a3b8;      /* 次要文字顏色 */
+            --border-color: rgba(123, 159, 231, 0.25); /* 邊框線條色 */
+
+            /* 區塊間距設定（可在此處修改整體留白與距離） */
+            --section-spacing: 100px;   /* 上下區塊間距 */
+            --container-padding: 20px;  /* 容器左右內距 */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Microsoft JhengHei", sans-serif;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* 背景星空裝飾（模擬點點星芒） */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                radial-gradient(white 1px, transparent 0),
+                radial-gradient(rgba(123,159,231,0.5) 1.5px, transparent 0);
+            background-size: 120px 120px, 80px 80px;
+            background-position: 0 0, 40px 40px;
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--container-padding);
+        }
+
+        /* ==========================================
+           2. 導覽列 (Navbar)
+           ================================---------- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(9, 11, 22, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: var(--text-main);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span {
+            color: var(--primary-glow);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-glow);
+            text-shadow: 0 0 10px rgba(123, 159, 231, 0.5);
+        }
+
+        /* ==========================================
+           3. 主視覺大區塊 (Hero Section)
+           ================================---------- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff 30%, var(--primary-glow) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(123, 159, 231, 0.2);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin-bottom: 40px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 35px;
+            background: transparent;
+            color: var(--primary-glow);
+            border: 1px solid var(--primary-glow);
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(123, 159, 231, 0.1);
+        }
+
+        .btn:hover {
+            background: var(--primary-glow);
+            color: var(--bg-deep);
+            box-shadow: 0 0 25px rgba(123, 159, 231, 0.6);
+        }
+
+        /* ==========================================
+           4. 內容區塊共用與世界觀/特點區塊 (Sections)
+           ================================---------- */
+        .section {
+            padding: var(--section-spacing) 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 60px;
+            font-size: 1rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px; /* 區塊內卡片間距 */
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 40px 30px;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary-glow);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--primary-glow);
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* ==========================================
+           5. 頁尾 (Footer)
+           ================================---------- */
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* 響應式微調 */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .nav-links { display: none; } /* 行動裝置簡化導覽列 */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 導覽列 -->
+    <header>
+        <div class="container nav-container">
+            <a href="#" class="logo"><span>✦</span> 星織學園</a>
+            <ul class="nav-links">
+                <li><a href="#about">關於世界觀</a></li>
+                <li><a href="#features">織星少女</a></li>
+                <li><a href="#news">最新消息</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- 主視覺區塊 -->
+    <section class="hero">
+        <div class="container">
+            <h1>HOSHIORI GAKUEN</h1>
+            <p>那是圍繞巨大熔爐「熔星爐」建成的箱庭世界。少女們將願望與命運奉獻於此，編織無盡的星光。</p>
+            <a href="#about" class="btn">探索世界</a>
+        </div>
+    </section>
+
+    <!-- 世界觀/特色區塊 -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title">世界觀與設定</h2>
+            <p class="section-subtitle">探索隱藏在夜空與箱庭背後的命運軌跡</p>
+            
+            <div class="grid-3">
+                <div class="card">
+                    <h3>熔星爐箱庭</h3>
+                    <p>座落於巨大星空熔爐之中的特殊學園環境，伴隨著永無止境的輪迴與星辰延續，交織出獨特的命運舞台。</p>
+                </div>
+                <div class="card">
+                    <h3>織星少女</h3>
+                    <p>為了守護星辰而存在的學生們。她們燃燒著愛與願望，將最珍視的事物奉獻給熔爐，在夜空中刻下軌跡。</p>
+                </div>
+                <div class="card">
+                    <h3>迷失的星屑</h3>
+                    <p>當完美的輪迴中出現了意料之外的雜質與好奇心，隱藏在學園深處的重重秘密也將隨之被全盤揭開。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 頁尾 -->
+    <footer>
+        <div class="container">
+            <p>&copy; Hoshiori Gakuen Fan Recreation. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
